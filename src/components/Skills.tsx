@@ -3,63 +3,71 @@
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 
-const categories = [
-  { label: "Frontend", color: "#a78bfa", skills: [{ name: "React", level: 85 }, { name: "Next.js", level: 80 }, { name: "TypeScript", level: 78 }, { name: "Tailwind CSS", level: 90 }, { name: "HTML / CSS", level: 95 }] },
-  { label: "Backend", color: "#06b6d4", skills: [{ name: "Node.js", level: 80 }, { name: "Express", level: 78 }, { name: "PostgreSQL", level: 70 }, { name: "MongoDB", level: 65 }, { name: "REST APIs", level: 82 }] },
-  { label: "Ferramentas", color: "#f472b6", skills: [{ name: "Git / GitHub", level: 88 }, { name: "Docker", level: 55 }, { name: "Linux", level: 65 }, { name: "Figma", level: 60 }, { name: "Prisma ORM", level: 70 }] },
+const stack = [
+  { name: "React", category: "Frontend", level: 85 },
+  { name: "Next.js", category: "Frontend", level: 80 },
+  { name: "TypeScript", category: "Frontend", level: 78 },
+  { name: "Tailwind CSS", category: "Frontend", level: 90 },
+  { name: "Node.js", category: "Backend", level: 80 },
+  { name: "Express", category: "Backend", level: 75 },
+  { name: "PostgreSQL", category: "Backend", level: 70 },
+  { name: "MongoDB", category: "Backend", level: 65 },
+  { name: "Prisma", category: "Backend", level: 70 },
+  { name: "Git / GitHub", category: "Tools", level: 88 },
+  { name: "Docker", category: "Tools", level: 55 },
+  { name: "Figma", category: "Tools", level: 60 },
 ];
 
-const techIcons = [
-  { name: "React", icon: "⚛️" }, { name: "Next.js", icon: "▲" }, { name: "Node.js", icon: "🟢" },
-  { name: "TypeScript", icon: "TS" }, { name: "PostgreSQL", icon: "🐘" }, { name: "MongoDB", icon: "🍃" },
-  { name: "Docker", icon: "🐳" }, { name: "Git", icon: "⎇" }, { name: "Tailwind", icon: "💨" },
-  { name: "Prisma", icon: "◆" }, { name: "Express", icon: "Ex" }, { name: "Figma", icon: "🎨" },
-];
+const categoryColor: Record<string, string> = {
+  Frontend: "#a78bfa",
+  Backend: "#06b6d4",
+  Tools: "#f472b6",
+};
 
 export default function Skills() {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-80px" });
 
   return (
-    <section id="skills" className="py-32 px-6" style={{ background: "rgba(139,92,246,0.02)" }}>
+    <section id="skills" className="py-40 px-6" style={{ background: "rgba(255,255,255,0.01)" }}>
       <div className="max-w-6xl mx-auto" ref={ref}>
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.6 }} className="mb-16 text-center">
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.6 }} className="mb-20">
           <span className="text-xs font-medium tracking-widest uppercase mb-4 block" style={{ color: "#06b6d4" }}>Tecnologias</span>
-          <h2 className="text-4xl md:text-5xl font-bold tracking-tight" style={{ color: "#e2e8f0" }}>Meu stack</h2>
+          <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
+            <h2 className="text-5xl md:text-6xl font-bold tracking-tight" style={{ color: "#f8fafc" }}>Meu stack</h2>
+            <p className="text-sm max-w-xs md:text-right" style={{ color: "#475569" }}>
+              Tecnologias que uso no dia a dia para construir produtos completos.
+            </p>
+          </div>
         </motion.div>
 
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.6, delay: 0.1 }} className="flex flex-wrap justify-center gap-3 mb-20">
-          {techIcons.map(({ name, icon }, i) => (
-            <motion.div key={name} initial={{ opacity: 0, scale: 0.8 }} animate={inView ? { opacity: 1, scale: 1 } : {}} transition={{ duration: 0.4, delay: 0.15 + i * 0.05 }}
-              className="glass flex items-center gap-2 px-4 py-2 rounded-full text-sm transition-all duration-200 cursor-default" style={{ color: "#94a3b8" }}
-              onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.color = "#e2e8f0"; (e.currentTarget as HTMLElement).style.borderColor = "rgba(139,92,246,0.3)"; (e.currentTarget as HTMLElement).style.transform = "translateY(-2px)"; }}
-              onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.color = "#94a3b8"; (e.currentTarget as HTMLElement).style.borderColor = "rgba(255,255,255,0.07)"; (e.currentTarget as HTMLElement).style.transform = "translateY(0)"; }}>
-              <span className="text-sm">{icon}</span><span>{name}</span>
-            </motion.div>
-          ))}
-        </motion.div>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {categories.map(({ label, color, skills }, ci) => (
-            <motion.div key={label} initial={{ opacity: 0, y: 20 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.6, delay: 0.2 + ci * 0.1 }} className="glass rounded-2xl p-6">
-              <div className="text-xs font-semibold tracking-widest uppercase mb-5" style={{ color }}>{label}</div>
-              <div className="flex flex-col gap-4">
-                {skills.map(({ name, level }, si) => (
-                  <div key={name}>
-                    <div className="flex justify-between mb-1.5">
-                      <span className="text-sm" style={{ color: "#e2e8f0" }}>{name}</span>
-                      <span className="text-xs" style={{ color: "#64748b" }}>{level}%</span>
-                    </div>
-                    <div className="h-1.5 rounded-full overflow-hidden" style={{ background: "rgba(255,255,255,0.06)" }}>
-                      <motion.div className="h-full rounded-full" style={{ background: `linear-gradient(90deg,${color},${color}99)` }}
-                        initial={{ width: 0 }} animate={inView ? { width: `${level}%` } : {}}
-                        transition={{ duration: 1, delay: 0.4 + ci * 0.1 + si * 0.06, ease: "easeOut" }} />
-                    </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+          {stack.map(({ name, category, level }, i) => {
+            const color = categoryColor[category];
+            return (
+              <motion.div key={name} initial={{ opacity: 0, y: 20 }} animate={inView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.5, delay: 0.05 * i }}
+                className="group p-5 rounded-2xl transition-all duration-300"
+                style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.05)" }}
+                onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.background = "rgba(255,255,255,0.04)"; (e.currentTarget as HTMLElement).style.borderColor = `${color}25`; }}
+                onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.background = "rgba(255,255,255,0.02)"; (e.currentTarget as HTMLElement).style.borderColor = "rgba(255,255,255,0.05)"; }}>
+                <div className="flex items-center justify-between mb-4">
+                  <div>
+                    <div className="font-medium text-sm mb-0.5" style={{ color: "#e2e8f0" }}>{name}</div>
+                    <div className="text-xs" style={{ color: `${color}99` }}>{category}</div>
                   </div>
-                ))}
-              </div>
-            </motion.div>
-          ))}
+                  <div className="text-sm font-mono font-medium" style={{ color: "#334155" }}>{level}%</div>
+                </div>
+                <div className="h-1 rounded-full overflow-hidden" style={{ background: "rgba(255,255,255,0.04)" }}>
+                  <motion.div className="h-full rounded-full"
+                    style={{ background: `linear-gradient(90deg, ${color}, ${color}66)` }}
+                    initial={{ width: 0 }}
+                    animate={inView ? { width: `${level}%` } : {}}
+                    transition={{ duration: 1.2, delay: 0.1 + i * 0.04, ease: "easeOut" }} />
+                </div>
+              </motion.div>
+            );
+          })}
         </div>
       </div>
     </section>

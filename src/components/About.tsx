@@ -1,80 +1,98 @@
 "use client";
 
-import { motion, useInView } from "framer-motion";
+import { motion, useInView, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
-import { Code2, Lightbulb, Rocket, Users } from "lucide-react";
 
-const cards = [
-  { icon: Code2, title: "Clean Code", desc: "Escrevo código legível, organizado e de fácil manutenção.", color: "#a78bfa" },
-  { icon: Lightbulb, title: "Aprendizado Rápido", desc: "Me adapto a novas tecnologias e contextos com agilidade.", color: "#06b6d4" },
-  { icon: Rocket, title: "Entrega de Valor", desc: "Foco em resolver problemas reais com soluções eficientes.", color: "#f472b6" },
-  { icon: Users, title: "Trabalho em Equipe", desc: "Colaborativo, comunicativo e comprometido com o time.", color: "#34d399" },
+const stats = [
+  { num: "10+", label: "Projetos entregues" },
+  { num: "2+", label: "Anos de estudo" },
+  { num: "15+", label: "Tecnologias" },
+  { num: "100%", label: "Comprometimento" },
+];
+
+const values = [
+  { title: "Clean Code", desc: "Código legível, bem estruturado e fácil de manter.", icon: "◈" },
+  { title: "Performance", desc: "Foco em entregar experiências rápidas e fluidas.", icon: "⚡" },
+  { title: "Detalhes", desc: "Cada pixel e cada interação importam para mim.", icon: "◎" },
+  { title: "Colaboração", desc: "Trabalho bem em equipe, comunicação clara e objetiva.", icon: "⟡" },
 ];
 
 export default function About() {
   const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: "-100px" });
+  const inView = useInView(ref, { once: true, margin: "-80px" });
+  const sectionRef = useRef(null);
+  const { scrollYProgress } = useScroll({ target: sectionRef, offset: ["start end", "end start"] });
+  const y = useTransform(scrollYProgress, [0, 1], [60, -60]);
 
   return (
-    <section id="about" className="py-32 px-6">
+    <section id="about" className="py-40 px-6 overflow-hidden" ref={sectionRef}>
       <div className="max-w-6xl mx-auto" ref={ref}>
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.6 }} className="mb-16">
-          <span className="text-xs font-medium tracking-widest uppercase mb-4 block" style={{ color: "#a78bfa" }}>Sobre mim</span>
-          <h2 className="text-4xl md:text-5xl font-bold tracking-tight mb-6" style={{ color: "#e2e8f0" }}>Quem sou eu?</h2>
-          <p className="text-lg max-w-2xl leading-relaxed" style={{ color: "#94a3b8" }}>
-            Sou desenvolvedor Full Stack em início de carreira, com forte base em JavaScript/TypeScript, React e Node.js. Tenho paixão por transformar ideias em produtos digitais funcionais e bonitos.
-          </p>
-        </motion.div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 mb-16">
-          <motion.div initial={{ opacity: 0, x: -30 }} animate={inView ? { opacity: 1, x: 0 } : {}} transition={{ duration: 0.6, delay: 0.2 }}>
-            <p className="text-base leading-8 mb-6" style={{ color: "#94a3b8" }}>
-              Comecei minha jornada no desenvolvimento por curiosidade e hoje é minha maior paixão. Estudo constantemente as melhores práticas de desenvolvimento, desde a arquitetura de software até a experiência do usuário.
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center mb-28">
+          {/* Left */}
+          <motion.div initial={{ opacity: 0, x: -40 }} animate={inView ? { opacity: 1, x: 0 } : {}} transition={{ duration: 0.8 }}>
+            <span className="text-xs font-medium tracking-widest uppercase mb-6 block" style={{ color: "#a78bfa" }}>Sobre mim</span>
+            <h2 className="text-5xl md:text-6xl font-bold tracking-tight mb-8 leading-tight" style={{ color: "#f8fafc" }}>
+              Construindo o<br />
+              <span style={{ color: "#475569" }}>futuro digital</span>
+            </h2>
+            <p className="text-base leading-8 mb-6" style={{ color: "#64748b" }}>
+              Sou desenvolvedor Full Stack em início de carreira apaixonado por transformar ideias complexas em produtos digitais simples, bonitos e funcionais. Tenho base sólida em JavaScript/TypeScript, React e Node.js.
             </p>
-            <p className="text-base leading-8" style={{ color: "#94a3b8" }}>
-              Busco uma oportunidade de estágio ou posição júnior onde possa aplicar meus conhecimentos, contribuir de verdade e crescer junto com uma equipe incrível.
+            <p className="text-base leading-8 mb-10" style={{ color: "#64748b" }}>
+              Busco uma oportunidade de estágio ou posição júnior onde possa contribuir de verdade, aprender com profissionais experientes e crescer rápido.
             </p>
-            <div className="mt-8 flex flex-wrap gap-3">
-              {["Disponível para remoto", "Aberto a presencial SP", "Início imediato"].map((tag) => (
-                <span key={tag} className="text-xs px-3 py-1.5 rounded-full"
-                  style={{ background: "rgba(139,92,246,0.1)", border: "1px solid rgba(139,92,246,0.2)", color: "#a78bfa" }}>
+            <div className="flex flex-wrap gap-2">
+              {["Remoto", "Presencial SP", "Início imediato"].map((tag) => (
+                <span key={tag} className="text-xs px-4 py-2 rounded-full font-medium"
+                  style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)", color: "#94a3b8" }}>
                   {tag}
                 </span>
               ))}
             </div>
           </motion.div>
 
-          <motion.div initial={{ opacity: 0, x: 30 }} animate={inView ? { opacity: 1, x: 0 } : {}} transition={{ duration: 0.6, delay: 0.3 }} className="relative">
-            <div className="aspect-square rounded-2xl overflow-hidden flex items-center justify-center"
-              style={{ background: "linear-gradient(135deg,rgba(139,92,246,0.15),rgba(6,182,212,0.08))", border: "1px solid rgba(255,255,255,0.06)" }}>
-              <div className="text-center px-8">
-                <div className="text-6xl font-bold mb-2 gradient-text">ES</div>
-                <p style={{ color: "#64748b" }} className="text-sm">Erick Sousa</p>
-                <p style={{ color: "#a78bfa" }} className="text-xs mt-1">Full Stack Developer</p>
-                <div className="grid grid-cols-2 gap-4 mt-8">
-                  {[{ num: "10+", label: "Projetos" }, { num: "2+", label: "Anos estudando" }, { num: "5+", label: "Tecnologias" }, { num: "100%", label: "Comprometido" }].map(({ num, label }) => (
-                    <div key={label} className="rounded-xl p-3" style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.06)" }}>
-                      <div className="text-xl font-bold gradient-text">{num}</div>
-                      <div className="text-xs mt-0.5" style={{ color: "#64748b" }}>{label}</div>
+          {/* Right — parallax stats card */}
+          <motion.div style={{ y }} className="relative">
+            <motion.div initial={{ opacity: 0, x: 40 }} animate={inView ? { opacity: 1, x: 0 } : {}} transition={{ duration: 0.8, delay: 0.15 }}>
+              <div className="relative rounded-3xl p-10 overflow-hidden"
+                style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.06)" }}>
+                <div className="absolute inset-0" style={{ background: "radial-gradient(ellipse at top right, rgba(139,92,246,0.08) 0%, transparent 70%)" }} />
+                <div className="relative z-10 grid grid-cols-2 gap-8">
+                  {stats.map(({ num, label }) => (
+                    <div key={label} className="group">
+                      <div className="text-4xl font-bold mb-1 tracking-tight" style={{ color: "#f8fafc" }}>{num}</div>
+                      <div className="text-sm" style={{ color: "#475569" }}>{label}</div>
                     </div>
                   ))}
                 </div>
+                <div className="relative z-10 mt-10 pt-10" style={{ borderTop: "1px solid rgba(255,255,255,0.05)" }}>
+                  <div className="text-xs mb-3 tracking-widest uppercase" style={{ color: "#334155" }}>Stack principal</div>
+                  <div className="flex flex-wrap gap-2">
+                    {["React", "Next.js", "TypeScript", "Node.js", "PostgreSQL", "Tailwind"].map((t) => (
+                      <span key={t} className="text-xs px-3 py-1.5 rounded-lg font-mono"
+                        style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.06)", color: "#64748b" }}>
+                        {t}
+                      </span>
+                    ))}
+                  </div>
+                </div>
               </div>
-            </div>
+            </motion.div>
           </motion.div>
         </div>
 
+        {/* Values */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          {cards.map(({ icon: Icon, title, desc, color }, i) => (
-            <motion.div key={title} initial={{ opacity: 0, y: 20 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.5, delay: 0.4 + i * 0.1 }}
-              className="glass rounded-2xl p-6 group transition-all duration-300" style={{ cursor: "default" }}
-              onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.borderColor = `${color}30`; (e.currentTarget as HTMLElement).style.transform = "translateY(-4px)"; }}
-              onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.borderColor = "rgba(255,255,255,0.07)"; (e.currentTarget as HTMLElement).style.transform = "translateY(0)"; }}>
-              <div className="w-10 h-10 rounded-xl flex items-center justify-center mb-4" style={{ background: `${color}18`, color }}>
-                <Icon size={18} />
-              </div>
+          {values.map(({ title, desc, icon }, i) => (
+            <motion.div key={title} initial={{ opacity: 0, y: 30 }} animate={inView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.6, delay: 0.3 + i * 0.1 }}
+              className="group p-6 rounded-2xl transition-all duration-300"
+              style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.05)" }}
+              onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.background = "rgba(255,255,255,0.04)"; (e.currentTarget as HTMLElement).style.borderColor = "rgba(139,92,246,0.2)"; }}
+              onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.background = "rgba(255,255,255,0.02)"; (e.currentTarget as HTMLElement).style.borderColor = "rgba(255,255,255,0.05)"; }}>
+              <div className="text-2xl mb-4" style={{ color: "#a78bfa" }}>{icon}</div>
               <h3 className="font-semibold mb-2 text-sm" style={{ color: "#e2e8f0" }}>{title}</h3>
-              <p className="text-xs leading-relaxed" style={{ color: "#64748b" }}>{desc}</p>
+              <p className="text-xs leading-relaxed" style={{ color: "#475569" }}>{desc}</p>
             </motion.div>
           ))}
         </div>

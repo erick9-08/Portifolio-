@@ -1,15 +1,12 @@
 @import "tailwindcss";
 
 :root {
-  --bg: #08080f;
-  --surface: #0f0f1a;
-  --surface-2: #16162a;
-  --border: rgba(255, 255, 255, 0.06);
+  --bg: #09090b;
+  --surface: #0f0f12;
   --accent-1: #8b5cf6;
   --accent-2: #06b6d4;
   --accent-3: #f472b6;
-  --text: #e2e8f0;
-  --text-muted: #64748b;
+  --text: #f8fafc;
 }
 
 @theme inline {
@@ -19,7 +16,8 @@
   --font-mono: var(--font-geist-mono);
 }
 
-* { box-sizing: border-box; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
 html { scroll-behavior: smooth; }
 
 body {
@@ -27,36 +25,38 @@ body {
   color: var(--text);
   font-family: var(--font-geist-sans, system-ui, sans-serif);
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
 }
 
-::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar { width: 3px; }
 ::-webkit-scrollbar-track { background: var(--bg); }
-::-webkit-scrollbar-thumb { background: var(--accent-1); border-radius: 2px; }
+::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 2px; }
+::-webkit-scrollbar-thumb:hover { background: #334155; }
 
 .gradient-text {
-  background: linear-gradient(135deg, #a78bfa, #06b6d4, #f472b6);
+  background: linear-gradient(135deg, #a78bfa 0%, #06b6d4 50%, #f472b6 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
 .glass {
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.07);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
 }
 
 .grid-bg {
   background-image:
-    linear-gradient(rgba(139, 92, 246, 0.04) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(139, 92, 246, 0.04) 1px, transparent 1px);
-  background-size: 64px 64px;
+    linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+  background-size: 80px 80px;
 }
 
-.glow-purple { box-shadow: 0 0 40px rgba(139, 92, 246, 0.2); }
-.glow-cyan   { box-shadow: 0 0 40px rgba(6, 182, 212, 0.2); }
-.glow-pink   { box-shadow: 0 0 40px rgba(244, 114, 182, 0.2); }
-
 section { position: relative; z-index: 2; }
+
+/* Placeholder style */
+::placeholder { color: #1e293b; }
+input, textarea { color-scheme: dark; }
